@@ -26,6 +26,19 @@ Running 10s test @ http://localhost:8082
   Socket errors: connect 0, read 137168, write 6, timeout 0
 Requests/sec:  13618.38
 Transfer/sec:      0.88MB
+
+
+# 在xms512m 的情况下 没啥区别
+tyz@mbp16  ~/java > wrk  -t 4 -c 40 -d10s http://localhost:8082
+Running 10s test @ http://localhost:8082
+  4 threads and 40 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.84ms   16.41ms 157.17ms   95.29%
+    Req/Sec     3.47k   769.92    10.83k    87.63%
+  137261 requests in 10.07s, 8.90MB read
+  Socket errors: connect 0, read 137240, write 20, timeout 0
+Requests/sec:  13634.67
+Transfer/sec:      0.88MB
  */
 
 public class Server02 {
