@@ -1,11 +1,11 @@
 package conc0303;
 
 /**
- * 通过全局变量设置
- * 主线程通过轮训来判断有没有被处理完成
+ * 多等一会儿 (不太靠谱, 但是大概率能返回成功)
+ *
  * @author tyz
  */
-public class Homework03Method01 {
+public class Homework03Method02 {
 
     static int result = 0;
 
@@ -17,17 +17,12 @@ public class Homework03Method01 {
         // 异步执行 下面方法
 
         Thread thread = new Thread(() -> {
-            Homework03Method01.result = sum();
+            Homework03Method02.result = sum();
         });
         thread.start();
 
-        while (true) {
-            if (Homework03Method01.result != 0) {
-                break;
-            }
-            System.out.println("等待结果...");
-            Thread.sleep(10);
-        }
+        System.out.println("等待结果...10s");
+        Thread.sleep(10 * 1000);
 
         // 这是得到的返回值
 
