@@ -1,13 +1,15 @@
 package com.tangyouze.jdbc;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
-import javax.sound.midi.Soundbank;
 import java.sql.*;
+import java.time.ZonedDateTime;
 
 /**
  * @author tyz
  */
+@Slf4j
 public class ConnectionPlay {
     private Connection conn;
     private final String URL = "jdbc:mysql://localhost:3306/mysql";
@@ -160,5 +162,61 @@ public class ConnectionPlay {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void runWithHikari() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        //2.获得数据库的连接
+        conn = DriverManager.getConnection(URL, NAME, PASSWORD);
+
+        try {
+            dropTable();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        createTable();
+        insert();
+
+        Connection con = DataSource.getConnection();
+        ZonedDateTime start = ZonedDateTime.now();
+        for (int i = 0; i < 10000; i++) {
+            PreparedStatement pst = con.prepareStatement("select id, name from play1 ");
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+//                System.out.println("hikari get" + id + " " + name);
+            }
+        }
+        ZonedDateTime end = ZonedDateTime.now();
+        log.info("start {} end {}", start, end);
+
+        dropTable();
+    }
+
+    public void runWithJDBCSpeedTest() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+
+        //2.获得数据库的连接
+        conn = DriverManager.getConnection(URL, NAME, PASSWORD);
+        createTable();
+        insert();
+
+        ZonedDateTime start = ZonedDateTime.now();
+        for (int i = 0; i < 10000; i++) {
+
+            Statement stmt = conn.createStatement();
+            ResultSet resultSet = stmt.executeQuery("select * from play1");
+//            System.out.println(resultSet);
+            while (resultSet.next()) {
+                String t = resultSet.getInt("id") + " " + resultSet.getString("name");
+            }
+        }
+        ZonedDateTime end = ZonedDateTime.now();
+        log.info("normal JDBC start {} end {}", start, end);
+
+        dropTable();
     }
 }

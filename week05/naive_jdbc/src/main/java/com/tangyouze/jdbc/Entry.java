@@ -14,6 +14,8 @@ public class Entry {
 
         ConnectionPlay play = new ConnectionPlay();
 //        play.run();
-        play.runTransaction();
+//        play.runTransaction();
+        play.runWithHikari();
+        play.runWithJDBCSpeedTest();
     }
 }
