@@ -1,5 +1,7 @@
 package com.tangyouze.jdbc;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -46,7 +48,7 @@ public class ConnectionPlay {
 
     }
 
-    private String randomString() {
+    private @NotNull String randomString() {
         String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         int length = str.length();
         StringBuilder sb = new StringBuilder();
