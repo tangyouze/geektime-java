@@ -56,14 +56,19 @@ public class ConnectionPlay {
         PreparedStatement preparedStatement = conn.prepareStatement(sql);
         ZonedDateTime start = ZonedDateTime.now();
         for (int i = 0; i < 1000000; i++) {
+            if (i % 10000 == 0) {
+                log.info("{} {}", i, ZonedDateTime.now());
+            }
             preparedStatement.setInt(1, i);
             preparedStatement.setInt(2, 10);
             preparedStatement.setInt(3, 1);
             preparedStatement.setDouble(4, 4.3);
             preparedStatement.setString(5, "status");
-            preparedStatement.execute();
+            preparedStatement.addBatch();
             if (i % 10000 == 0) {
                 log.info("{} {}", i, ZonedDateTime.now());
+                preparedStatement.executeBatch();
+                preparedStatement.clearBatch();
             }
         }
 
