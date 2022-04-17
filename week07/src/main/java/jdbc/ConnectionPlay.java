@@ -183,7 +183,7 @@ public class ConnectionPlay {
         createTable();
         insert();
 
-        Connection con = DataSource.getConnection();
+        Connection con = MyDataSource.getConnection();
         ZonedDateTime start = ZonedDateTime.now();
         for (int i = 0; i < 10000; i++) {
             PreparedStatement pst = con.prepareStatement("select id, name from play1 ");

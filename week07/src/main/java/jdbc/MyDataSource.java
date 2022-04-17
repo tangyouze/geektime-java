@@ -9,7 +9,7 @@ import java.sql.SQLException;
 /**
  * @author tyz
  */
-public class DataSource {
+public class MyDataSource {
 
     private static HikariConfig config = new HikariConfig();
     private static HikariDataSource ds;
@@ -24,7 +24,7 @@ public class DataSource {
         ds = new HikariDataSource(config);
     }
 
-    private DataSource() {
+    private MyDataSource() {
     }
 
     public static Connection getConnection() throws SQLException {
