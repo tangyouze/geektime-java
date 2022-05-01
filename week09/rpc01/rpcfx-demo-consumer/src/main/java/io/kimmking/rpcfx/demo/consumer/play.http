@@ -1,0 +1,24 @@
+POST http://localhost:8080
+Content-Type: application/json
+
+{
+  "method": "findById",
+  "params": [
+    1
+  ],
+  "serviceClass": "io.kimmking.rpcfx.demo.api.UserService"
+}
+
+
+###
+
+POST http://localhost:8080
+Content-Type: application/json
+
+{
+  "method": "findById",
+  "params": [
+    1
+  ],
+  "serviceClass": "io.kimmking.rpcfx.demo.api.world"
+}

@@ -1,0 +1,5 @@
+{
+  "result": "{\"@type\":\"io.kimmking.rpcfx.demo.api.User\",\"id\":1,\"name\":\"KK1651378567659\"}",
+  "status": true,
+  "exception": null
+}
