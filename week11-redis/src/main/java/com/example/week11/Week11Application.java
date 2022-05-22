@@ -50,6 +50,18 @@ public class Week11Application implements CommandLineRunner {
         new Thread(myRunnableLock).start();
 
         Thread.sleep(3 * 1000);
+
+
+        Runnable removeStorage = new Runnable() {
+            public void run() {
+                removeStorageLock();
+            }
+        };
+        template.opsForValue().set("storage", "100");
+        new Thread(removeStorage).start();
+        new Thread(removeStorage).start();
+
+        Thread.sleep(3 * 1000);
     }
 
     public void incrementWithoutLock() {
@@ -78,6 +90,22 @@ public class Week11Application implements CommandLineRunner {
             }
         }
         String increment = template.opsForValue().get("increment");
+        System.out.println(increment);
+
+    }
+    public void removeStorageLock() {
+        System.out.println("remove with lock");
+        for (int i = 0; i < 10000; ) {
+            Boolean t = template.opsForValue().setIfAbsent("key", "value", Duration.ofMinutes(1));
+            if (Boolean.TRUE.equals(t)) {
+                String p = template.opsForValue().get("storage");
+                int v = Integer.parseInt(p);
+                v -= 1;
+                template.opsForValue().set("storage", String.valueOf(v));
+                template.delete("key");
+            }
+        }
+        String increment = template.opsForValue().get("storage");
         System.out.println(increment);
 
     }
