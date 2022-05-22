@@ -21,6 +21,8 @@ public class Week11Application implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Hello World!");
         template.opsForValue().set("foo", "bar");
+        String foo = template.opsForValue().get("foo");
+        System.out.println(foo);
     }
 
 //    @Bean
