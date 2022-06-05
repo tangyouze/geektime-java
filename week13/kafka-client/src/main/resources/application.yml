@@ -1,0 +1,5 @@
+spring:
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+    bootstrap-servers: 47.57.5.0:9092
